@@ -15,14 +15,19 @@ public class RecordEntityDao implements IDao<RecordEntity>
 
 
     public void write(RecordEntity record) {
+        log.debug("RecordEntityDao.write( " + record + ")");
 
     }
 
     public RecordEntity load(int id) {
+        log.debug("RecordEntityDao.load( " + id + ")");
+
         return null;
     }
 
     public List<RecordEntity> loadAll(int id) {
+        log.debug("RecordEntityDao.loadAll()");
+
         return null;
     }
 }
