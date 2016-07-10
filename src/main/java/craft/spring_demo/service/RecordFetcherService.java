@@ -1,7 +1,6 @@
 package craft.spring_demo.service;
 
-import craft.spring_demo.dao.IDao;
-import craft.spring_demo.dao.RecordEntityDao;
+import craft.spring_demo.dao.IRecordEntityDao;
 import craft.spring_demo.model.RecordEntity;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,7 +18,7 @@ public class RecordFetcherService implements IRecordFetcherService {
     private Log log = log = LogFactory.getLog(RecordFetcherService.class);
 
     @Autowired
-    private IDao<RecordEntity> dao;
+    private IRecordEntityDao dao;
 
 
 

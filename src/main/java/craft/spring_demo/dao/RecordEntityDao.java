@@ -19,7 +19,7 @@ import java.util.List;
 
 @Transactional
 @Repository
-public class RecordEntityDao implements IDao<RecordEntity>
+public class RecordEntityDao implements IRecordEntityDao
 {
     private Log log = log = LogFactory.getLog(RecordEntityDao.class);
 

@@ -1,7 +1,7 @@
 package craft.spring_demo.cfg;
 
 import craft.spring_demo.model.RecordEntity;
-import org.apache.commons.dbcp.BasicDataSource;
+
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
@@ -47,15 +49,13 @@ public class db_config {
     }
 
 
-    /** Sets up a data source using HyperSQL (hsqldb) in memory */
+    /** Sets up a data source using HyperSQL (hsqldb)*/
     @Bean
     public DataSource dataSource() {
-        BasicDataSource dsrc = new BasicDataSource();
-        dsrc.setDriverClassName(jdbcDriver.class.getName());
-        dsrc.setUsername("phdnk");
-        dsrc.setPassword("");
-        dsrc.setUrl("jdbc:hsqldb:mem:spring_demo_db");
-        return dsrc;
+        return new EmbeddedDatabaseBuilder()
+                .setType(EmbeddedDatabaseType.HSQL)
+                .addScript("classpath:schema.sql")
+                .build();
     }
 
 

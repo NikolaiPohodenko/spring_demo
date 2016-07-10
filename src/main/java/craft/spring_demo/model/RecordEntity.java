@@ -6,12 +6,11 @@ package craft.spring_demo.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "service_responses")
+@Table(name = "RESPONCES")
 public class RecordEntity {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     public int getId() {
         return id;
