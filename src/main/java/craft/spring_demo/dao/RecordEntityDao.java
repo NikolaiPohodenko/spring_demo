@@ -16,6 +16,9 @@ import java.util.List;
 /**
  * Created by phdnk on 10-Jul-16.
  */
+
+@Transactional
+@Repository
 public class RecordEntityDao implements IDao<RecordEntity>
 {
     private Log log = log = LogFactory.getLog(RecordEntityDao.class);
@@ -32,13 +35,11 @@ public class RecordEntityDao implements IDao<RecordEntity>
     public void write(RecordEntity record) {
         log.debug("RecordEntityDao.write( " + record + " )");
 
-        try
-        {
+        try {
             Session mySession = session();
             mySession.save(record);
             mySession.flush();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             log.error(e.getMessage());
         }
     }
@@ -48,27 +49,25 @@ public class RecordEntityDao implements IDao<RecordEntity>
     public RecordEntity load(int id) {
         log.debug("RecordEntityDao.load( " + id + " )");
 
-        try{
+        try {
             return  session().get(RecordEntity.class, id);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             log.error(e.getMessage());
             return null;
         }
     }
 
 
+    @SuppressWarnings("unchecked")
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<RecordEntity> loadAll() {
         log.debug("RecordEntityDao.loadAll()");
 
-        try
-        {
+        try {
             Criteria crit = session().createCriteria(RecordEntity.class);
             return (List<RecordEntity>) crit.list();
 
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             log.error(e.getMessage());
             return null;
         }
