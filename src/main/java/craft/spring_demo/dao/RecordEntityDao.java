@@ -36,9 +36,7 @@ public class RecordEntityDao implements IDao<RecordEntity>
         log.debug("RecordEntityDao.write( " + record + " )");
 
         try {
-            Session mySession = session();
-            mySession.save(record);
-            mySession.flush();
+            session().persist(record);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
