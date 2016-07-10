@@ -9,5 +9,5 @@ import java.util.List;
 public interface IDao<E> {
     void write(E record);
     E load(int id);
-    List<E> loadAll(int id);
+    List<E> loadAll();
 }
