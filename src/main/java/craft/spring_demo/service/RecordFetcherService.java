@@ -34,6 +34,10 @@ public class RecordFetcherService implements IRecordFetcherService {
         if (entity != null) {
             dao.write(entity); // db is used as archive
         }
+        else
+        {
+            entity = dao.load(id); // in case we have manually sored the entity into the DB
+        }
         return entity;
     }
 
