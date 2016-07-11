@@ -80,4 +80,10 @@ public class RecordEntity {
         int b_hash = ( getBody() != null ?  getBody().hashCode() : 0);
         return (getUserId()*a + t_hash)*a + b_hash;
     }
+
+
+    public static boolean isValid(RecordEntity e)
+    {
+        return e != null && e.id != 0 && e.userId != 0;
+    }
 }

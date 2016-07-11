@@ -31,7 +31,7 @@ public class RecordFetcherService implements IRecordFetcherService {
 
     public RecordEntity fetchById(int id) {
         RecordEntity entity = fetchFromWebservice(id); // we want web request be fired every time
-        if (entity != null) {
+        if (RecordEntity.isValid(entity)) {
             dao.write(entity); // db is used as archive
         }
         else

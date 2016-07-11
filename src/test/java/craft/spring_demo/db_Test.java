@@ -17,7 +17,7 @@ import java.util.List;
  * Created by phdnk on 10-Jul-16.
  */
 
-public class test_db {
+public class db_Test {
 
     private IRecordFetcherService service;
 
@@ -36,7 +36,7 @@ public class test_db {
     @Test
     public void test_fetch_nonexistent_element()  {
         RecordEntity resultset = service.fetchById(Integer.MAX_VALUE);
-        Assert.assertTrue("Nonexistent element", resultset == null);
+        Assert.assertTrue(String.format("Nonexistent element: %s", resultset), resultset == null);
     }
 
 

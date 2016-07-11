@@ -1,7 +1,5 @@
 package craft.spring_demo;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import craft.spring_demo.cfg.db_config;
 import craft.spring_demo.model.RecordEntity;
 import craft.spring_demo.service.IRecordFetcherService;
@@ -14,25 +12,15 @@ import org.junit.Test;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.web.client.RestTemplate;
-
-
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import org.glassfish.jersey.client.ClientConfig;
-import org.glassfish.jersey.jackson.JacksonFeature;
 
 /**
  * Created by phdnk on 10-Jul-16.
  */
 
 
-public class test_service_fetch {
+public class service_fetch_Test {
 
-    private Log log = log = LogFactory.getLog(test_service_fetch.class);
+    private Log log = log = LogFactory.getLog(service_fetch_Test.class);
 
     private IRecordFetcherService service;
 

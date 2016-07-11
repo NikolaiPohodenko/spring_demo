@@ -11,7 +11,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 /**
  * Created by phdnk on 10-Jul-16.
  */
-public class test_app_init {
+public class app_init_Test {
 
     @Test
     public void testSpringHibernateInit() {
