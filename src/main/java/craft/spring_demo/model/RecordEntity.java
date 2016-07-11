@@ -4,9 +4,11 @@ package craft.spring_demo.model;
  * Created by phdnk on 09-Jul-16.
  */
 import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "RESPONCES")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RecordEntity {
 
     @Id
@@ -20,7 +22,7 @@ public class RecordEntity {
     }
 
 
-    @Column(name = "userID")
+    @Column(name = "userId")
     private int userId;
     public int getUserId() {
         return userId;
@@ -53,7 +55,7 @@ public class RecordEntity {
 
     @Override
     public String toString() {
-        return "RecordEntity" + "(" + getId() + ")";
+        return String.format("RecordEntity { id=%d, userId=%d, title=%s, body=%s }" , id, userId, title, body );
     }
 
 

@@ -10,6 +10,7 @@ import java.util.List;
 public interface IRecordFetcherService {
     RecordEntity       fetchById(int id);
     List<RecordEntity> fetchAll ();
-
     void save(RecordEntity record);
+
+    RecordEntity fetchFromWebservice(int id);
 }
