@@ -1,7 +1,3 @@
-/**
- * Created by ylauresh on 6/30/16.
- */
-
 function onButtonClick(){
     var postIdEl = document.getElementById("postId");
 

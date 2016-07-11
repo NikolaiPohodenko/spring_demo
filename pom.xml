@@ -7,6 +7,7 @@
     <groupId>craft</groupId>
     <artifactId>spring_demo</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
 
     <developers>
         <developer>
@@ -142,7 +143,7 @@
     </dependencies>
 
     <build>
-        <finalName>hsql_demo</finalName>
+        <finalName>spring_demo</finalName>
 
         <plugins>
             <plugin>
