@@ -52,11 +52,14 @@ public class RecordFetcherService implements IRecordFetcherService {
     private String path;
 
     private WebTarget buildRequest(Client serviceClient, int id){
+        if (host == null) host = "http://jsonplaceholder.typicode.com";
+        if (path == null) path = "posts";
         return serviceClient.target(host).path(path).path(String.valueOf(id));
     }
 
 
     public RecordEntity fetchFromWebservice(int id) {
+        log.info(String.format("fetchFromWebservice %d:", id));
         try {
             Client client = ClientBuilder.newClient(new ClientConfig());
             client.register(JacksonFeature.class);
