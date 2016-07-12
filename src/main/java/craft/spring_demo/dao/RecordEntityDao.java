@@ -36,7 +36,9 @@ public class RecordEntityDao implements IRecordEntityDao
         log.debug("RecordEntityDao.write( " + record + " )");
 
         try {
-            session().persist(record);
+            Session s = session();
+            s.saveOrUpdate(record);
+            s.flush();
         } catch (Exception e) {
             log.error(e.getMessage());
         }

@@ -13,7 +13,7 @@ public class web_config extends AbstractAnnotationConfigDispatcherServletInitial
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class<?>[0];
+        return null;
     }
 
     @Override

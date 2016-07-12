@@ -2,11 +2,14 @@ package craft.spring_demo.cfg;
 
 import craft.spring_demo.model.RecordEntity;
 
+import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
@@ -17,6 +20,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.hsqldb.jdbcDriver;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -26,26 +30,28 @@ import java.util.Properties;
  */
 
 @Configuration
+@EnableWebMvc
 @EnableTransactionManagement
-@ComponentScan(basePackages = { "craft.spring_demo.service"
+@ComponentScan(basePackages = { "craft.spring_demo.controller"
+                              , "craft.spring_demo.service"
                               , "craft.spring_demo.model"
                               , "craft.spring_demo.dao"
                               })
 @PropertySource("classpath:application.properties")
 public class db_config {
 
+    @Autowired
+    private Environment environment;
 
-    /** Loads the schema.sql file which does a create table so we have a table to work with in the project */
     @Bean
-    public DataSourceInitializer dataSourceInitializer(DataSource dataSource) {
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
 
-        ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
-        resourceDatabasePopulator.addScript(new ClassPathResource("/schema.sql"));
-
-        DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
-        dataSourceInitializer.setDataSource(dataSource);
-        dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator);
-        return dataSourceInitializer;
+    /** Sets up the hibernate transaction manager */
+    @Bean
+    public HibernateTransactionManager hibernateTransactionManager(SessionFactory sessionFactory) {
+        return new HibernateTransactionManager(sessionFactory);
     }
 
 
@@ -58,42 +64,32 @@ public class db_config {
                 .build();
     }
 
-
     /** Sets up the session factory */
     @Bean
     public LocalSessionFactoryBean sessionFactory(Environment environment, DataSource dataSource) {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
         factoryBean.setDataSource(dataSource);
         factoryBean.setPackagesToScan(RecordEntity.class.getPackage().getName());
-        factoryBean.setHibernateProperties(buildHibernateProperties(environment));
+        factoryBean.setHibernateProperties(buildHibernateProperties());
         return factoryBean;
     }
 
 
     /** Loading all the hibernate properties from a properties file */
-    protected Properties buildHibernateProperties(Environment env) {
-        Properties hibernateProperties = new Properties();
-
-        hibernateProperties.setProperty("hibernate.dialect"                , env.getProperty("hibernate.dialect"));
-        hibernateProperties.setProperty("hibernate.show_sql"               , env.getProperty("hibernate.show_sql"));
-        hibernateProperties.setProperty("hibernate.use_sql_comments"       , env.getProperty("hibernate.use_sql_comments"));
-        hibernateProperties.setProperty("hibernate.format_sql"             , env.getProperty("hibernate.format_sql"));
-        hibernateProperties.setProperty("hibernate.hbm2ddl.auto"           , env.getProperty("hibernate.hbm2ddl.auto"));
-        hibernateProperties.setProperty("hibernate.generate_statistics"    , env.getProperty("hibernate.generate_statistics"));
-        hibernateProperties.setProperty("javax.persistence.validation.mode", env.getProperty("javax.persistence.validation.mode"));
+    private Properties buildHibernateProperties() {
+        Properties properties = new Properties();
+        properties.put("hibernate.dialect"                , environment.getRequiredProperty("hibernate.dialect"));
+        properties.put("hibernate.show_sql"               , environment.getRequiredProperty("hibernate.show_sql"));
+        properties.put("hibernate.format_sql"             , environment.getRequiredProperty("hibernate.format_sql"));
+        properties.put("hibernate.use_sql_comments"       , environment.getProperty("hibernate.use_sql_comments"));
+        properties.put("hibernate.hbm2ddl.auto"           , environment.getProperty("hibernate.hbm2ddl.auto"));
+        properties.put("hibernate.generate_statistics"    , environment.getProperty("hibernate.generate_statistics"));
+        properties.put("javax.persistence.validation.mode", environment.getProperty("javax.persistence.validation.mode"));
 
         //Audit History flags
-        hibernateProperties.setProperty("org.hibernate.envers.store_data_at_delete"     , env.getProperty("org.hibernate.envers.store_data_at_delete"));
-        hibernateProperties.setProperty("org.hibernate.envers.global_with_modified_flag", env.getProperty("org.hibernate.envers.global_with_modified_flag"));
-
-        return hibernateProperties;
-    }
-
-
-    /** Sets up the hibernate transaction manager */
-    @Bean
-    public HibernateTransactionManager hibernateTransactionManager(SessionFactory sessionFactory) {
-        return new HibernateTransactionManager(sessionFactory);
+        properties.put("org.hibernate.envers.store_data_at_delete"     , environment.getProperty("org.hibernate.envers.store_data_at_delete"));
+        properties.put("org.hibernate.envers.global_with_modified_flag", environment.getProperty("org.hibernate.envers.global_with_modified_flag"));
+        return properties;
     }
 
 }

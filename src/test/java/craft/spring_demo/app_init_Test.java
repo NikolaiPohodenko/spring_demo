@@ -6,11 +6,13 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 
 /**
  * Created by phdnk on 10-Jul-16.
  */
+@WebAppConfiguration
 public class app_init_Test {
 
     @Test

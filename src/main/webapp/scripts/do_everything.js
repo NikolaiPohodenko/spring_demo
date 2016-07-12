@@ -2,7 +2,7 @@ function onButtonClick(){
     var postIdEl = document.getElementById("postId");
 
     var xmlhttp = new XMLHttpRequest();
-    var url = "/craft/demo/posts/" + postIdEl.value;
+    var url = "craft/demo/posts/" + postIdEl.value;
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             fetchAll();
@@ -14,7 +14,7 @@ function onButtonClick(){
 
 function fetchAll(){
     var xmlhttp = new XMLHttpRequest();
-    var url = "/craft/demo/posts";
+    var url = "craft/demo/posts";
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             var results = JSON.parse(xmlhttp.responseText);
